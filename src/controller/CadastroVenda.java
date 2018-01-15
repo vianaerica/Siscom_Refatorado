@@ -11,11 +11,10 @@ public class CadastroVenda {
 	private ArrayList<Venda> listaVendas = new ArrayList<Venda>();
 	private ValidaCadastroVenda valida = new ValidaCadastroVenda();
 
-
 	public void cadastrarNovaVenda(Cliente cliente, Vendedor vendedor, int formaPagto, ArrayList<ItemVenda> itens) throws Exception {
-		incluirItensNaListaItemVenda();
-		valida.validaFormaDePgto();
-		decrementarQuantidadeNoEstoque();
+		incluirItensNaListaItemVenda(itens);
+		valida.validaFormaDePgto(formaPagto, itens, cliente);
+		decrementarQuantidadeNoEstoque(itens);
 
 		Venda venda = new Venda();
 
@@ -23,19 +22,25 @@ public class CadastroVenda {
 		listaVendas.add(venda);
 	}
 
-	private void incluirItensNaListaItemVenda(){
+	private void incluirItensNaListaItemVenda(ArrayList<ItemVenda> itens) throws Exception{
 		for (ItemVenda itemVenda : itens) {
 			int qtd = 0;
 			for (ItemVenda item : itens) {
 				if (item.getProduto().getCodigo() == itemVenda.getProduto().getCodigo()) {
 					qtd++;
-					valida.validaItensDuplicados(qtd);
+					validaItensDuplicados(qtd);
 				}
 			}
 		}
 	}
 
-	private void decrementarQuantidadeNoEstoque(){
+	private void validaItensDuplicados(int qtd) throws Exception{
+		if (qtd > 1) {
+			throw new Exception("A venda possui produtos duplicados.");
+		}
+	}
+
+	private void decrementarQuantidadeNoEstoque(ArrayList<ItemVenda> itens){
 		for (ItemVenda itemVenda : itens) {
 			itemVenda.getProduto().decrementaQuantidadeDeProdutoNoEstoque(itemVenda.getQuantVenda());
 		}

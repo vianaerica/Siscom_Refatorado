@@ -1,16 +1,12 @@
 package controller;
 
+import java.util.ArrayList;
+import model.Cliente;
 import model.ItemVenda;
 
 public class ValidaCadastroVenda {
-
-	public void validaItensDuplicados(int qtd) throws Exception{
-		if (qtd > 1) {
-			throw new Exception("A venda possui produtos duplicados.");
-		}
-	}
 	
-	public void validaFormaDePgto() throws Exception{
+	public void validaFormaDePgto(int formaPagto, ArrayList<ItemVenda> itens, Cliente cliente) throws Exception{
 		if (formaPagto == 2) {
 			double total = 0;
 
