@@ -14,10 +14,10 @@ import javax.swing.JTabbedPane;
 import javax.swing.JPanel;
 import java.awt.SystemColor;
 import javax.swing.JTextField;
-
-import controller.Comercial;
+import controller.CadastroVendedor;
+import controller.DeletaVendedor;
+import controller.PesquisaVendedor;
 import model.Vendedor;
-
 import javax.swing.JTable;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -104,10 +104,10 @@ public class TelaVendedorAction extends JFrame {
 		JButton btnAdd = new JButton("");
 		btnAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Comercial com = new Comercial();
+				CadastroVendedor vend = new CadastroVendedor();
 				Date data = new Date();
 				try {
-					com.inserirNovaPessoa(new Vendedor(com.gerarCodPessoaSequencial(), txtNomeCad.getText(), txtTelefoneCad.getText(), txtEmailCad.getText(), data, txtCpfCad.getText(), Double.parseDouble( txtMetaMCad.getText())));
+					vend.cadastrarNovoVendedor(new Vendedor(1, txtNomeCad.getText(), txtTelefoneCad.getText(), txtEmailCad.getText(), data, txtCpfCad.getText(), Double.parseDouble( txtMetaMCad.getText())));
 				} catch (Exception e1) {
 					e1.getMessage();
 				}
@@ -122,8 +122,8 @@ public class TelaVendedorAction extends JFrame {
 		JButton btnDelete = new JButton("");
 		btnDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Comercial com = new Comercial();
-			//	com.excluirPessoa(Vendedor(txtCpfDel.getText()));
+				DeletaVendedor vend = new DeletaVendedor();
+				//vend.excluirClienteValidandoSeTemVenda(Vendedor(txtCpfDel.getText()));
 			}
 		});
 		btnDelete.setIcon(new ImageIcon("D:\\_Faculdade\\LTPIII\\WorkspaceJava\\Siscom_\\Icones\\icons8-Apagar Arquivo-24.png"));
@@ -135,9 +135,9 @@ public class TelaVendedorAction extends JFrame {
 		JButton btnSearch = new JButton("");
 		btnSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Comercial com = new Comercial();
+				PesquisaVendedor psq = new PesquisaVendedor();
 				try {
-					com.pesquisarVendedorPorCpf(txtCpfSearch.getText());
+					psq.pesquisarVendedorPorCpf(txtCpfSearch.getText());
 				} catch (Exception e1) {
 					e1.getMessage();
 				}
@@ -152,12 +152,7 @@ public class TelaVendedorAction extends JFrame {
 		JButton btnList = new JButton("");
 		btnList.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Comercial com = new Comercial();
-				try {
-					com.listarPessoasEmOrdemAlfabetica();
-				} catch (Exception e1) {
-					e1.getMessage();
-				}
+				//TODO
 			}
 		});
 		btnList.setIcon(new ImageIcon("D:\\_Faculdade\\LTPIII\\WorkspaceJava\\Siscom_\\Icones\\icons8-Lista-24.png"));

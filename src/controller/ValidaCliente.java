@@ -3,42 +3,33 @@ package controller;
 import java.util.ArrayList;
 import model.Cliente;
 import model.Pessoa;
-import model.Venda;
 
 public class ValidaCliente {
 
-	private ArrayList<Pessoa> listaPessoas = new ArrayList<Pessoa>();
+	private ArrayList<Pessoa> listaPessoas;
 
-	public boolean validaTipoCliente(Pessoa pessoa) throws Exception{
-		boolean cliente = false;
-		if (pessoa.getTipoPessoa() == 0){
-			cliente = true;
-		}
-		return cliente;
+	public ValidaCliente(ArrayList<Pessoa> listaPessoas) {
+		this.listaPessoas = listaPessoas;
 	}
-	
-	public boolean validaClienteExistente(Pessoa pessoa) throws Exception{
-		boolean existe = false;
+
+	public void validaClienteAntesDoCadastro(Pessoa pessoa) throws Exception{
+		validaTipoCliente(pessoa);
+		validaClienteExistente(pessoa);
+	}
+
+	private void validaTipoCliente(Pessoa pessoa) throws Exception{
+		if (pessoa.getTipoPessoa() != 0){
+			throw new Exception("A pessoa não é do tipo cliente.");
+		}
+	}
+
+	private void validaClienteExistente(Pessoa pessoa) throws Exception{
 		Cliente cliente = (Cliente) pessoa;
 		for (Pessoa pessoaCliente : listaPessoas) {
-			Cliente auxiliar = (Cliente) pessoaCliente;
-			if (cliente.getCpf().equals(auxiliar.getCpf())){
-				existe = true;
-				throw new Exception("O CPF informado já está cadastrado.");
+			Cliente clienteExistente = (Cliente) pessoaCliente;
+			if (cliente.getCpf().equals(clienteExistente.getCpf())){
+				throw new Exception("O cliente não pode ser cadastrado. O CPF informado já existe.");
 			}
 		}
-		return existe;
 	}
-	
-
-	public boolean validaSeTemVendaParaCliente(Pessoa pessoa) throws Exception{
-		boolean possuiVenda = false;
-		Venda venda = new Venda();
-		Cliente cliente = (Cliente) pessoa;
-		if (venda.getCliente() == cliente){
-			possuiVenda = true;
-		}
-		return possuiVenda;
-	}
-	
 }

@@ -7,7 +7,6 @@ import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Date;
-
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -20,10 +19,11 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
-import controller.Comercial;
+import controller.CadastroFornecedor;
+import controller.DeletaFornecedor;
+import controller.PesquisaFornecedor;
 import model.Fornecedor;
 import model.Pessoa;
-
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -122,10 +122,10 @@ public class TelaFornecedorAction extends JFrame {
 		JButton btnAdd = new JButton("");
 		btnAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Comercial com = new Comercial();
+				CadastroFornecedor cadForn = new CadastroFornecedor();
 				Date data = new Date();
 				try {
-					com.inserirNovaPessoa(new Fornecedor(com.gerarCodPessoaSequencial(), txtNomeCad.getText(), txtTelefoneCad.getText(), txtEmailCad.getText(), data, txtCnpjCad.getText(), txtNomeCttCad.getText()));
+					cadForn.cadastrarNovoFornecedor(new Fornecedor(1, txtNomeCad.getText(), txtTelefoneCad.getText(), txtEmailCad.getText(), data, txtCnpjCad.getText(), txtNomeCttCad.getText()));
 				} catch (Exception e1) {
 					e1.getMessage();
 				}
@@ -140,8 +140,8 @@ public class TelaFornecedorAction extends JFrame {
 		JButton btnDelete = new JButton("");
 		btnDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Comercial com = new Comercial();
-				//com.excluirPessoa(Fornecedor(txtCnpjDel.getText()));
+				DeletaFornecedor del = new DeletaFornecedor();
+				//del.excluirForncededorValidandoSeTemCompra(Fornecedor(txtCnpjDel.getText()));
 			}
 		});
 		btnDelete.setIcon(new ImageIcon("D:\\_Faculdade\\LTPIII\\WorkspaceJava\\Siscom_\\Icones\\icons8-Apagar Arquivo-24.png"));
@@ -153,12 +153,8 @@ public class TelaFornecedorAction extends JFrame {
 		JButton btnSearch = new JButton("");
 		btnSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Comercial com = new Comercial();
-				try {
-					com.pesquisarFornecedorPorCnpj(txtCnpjSearch.getText());
-				} catch (Exception e1) {
-					e1.getMessage();
-				}
+				PesquisaFornecedor psq = new PesquisaFornecedor();
+				//psq.pesquisarFornecedorPorCnpj(txtCnpjSearch.getText());
 			}
 		});
 		btnSearch.setIcon(new ImageIcon("D:\\_Faculdade\\LTPIII\\WorkspaceJava\\Siscom_\\Icones\\icons8-Pesquisa Google na Web-24.png"));
@@ -170,14 +166,8 @@ public class TelaFornecedorAction extends JFrame {
 		JButton btnList = new JButton("");
 		btnList.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Comercial com = new Comercial();
-				try {
-					com.listarPessoasEmOrdemAlfabetica();
-				} catch (Exception e1) {
-					e1.getMessage();
-				}
-			}
-		});
+				//TODO
+			});
 		btnList.setIcon(new ImageIcon("D:\\_Faculdade\\LTPIII\\WorkspaceJava\\Siscom_\\Icones\\icons8-Lista-24.png"));
 		btnList.setToolTipText("Listar");
 		btnList.setBackground(Color.WHITE);
@@ -314,29 +304,30 @@ public class TelaFornecedorAction extends JFrame {
 		tableListForn = new JTable();
 		tableListForn.setBounds(356, 190, -345, -178);
 		panelList.add(tableListForn);
+
+
+		private JTextField txtCodCad;
+		private JTextField txtCnpjCad;
+		private JTextField txtTelefoneCad;
+		private JTextField txtEmailCad;
+		private JTextField txtDtCadCad;
+		private JTextField txtNomeCad;
+		private JTextField txtNomeCttCad;
+		private JTable tableDelForn;
+		private JTextField txtCnpjDel;
+		private JTextField txtCnpjSearch;
+		private JTable tableSearch;
+		private JTable tableListForn;
+		}
+
+		private static final long serialVersionUID = 1L;
+
+		public void mostraEssaTela(){
+			setVisible(true);
+		}
+
+		public void fechaTelaForn(){
+			this.dispose();
+		}
 	}
 
-	private JTextField txtCodCad;
-	private JTextField txtCnpjCad;
-	private JTextField txtTelefoneCad;
-	private JTextField txtEmailCad;
-	private JTextField txtDtCadCad;
-	private JTextField txtNomeCad;
-	private JTextField txtNomeCttCad;
-	private JTable tableDelForn;
-	private JTextField txtCnpjDel;
-	private JTextField txtCnpjSearch;
-	private JTable tableSearch;
-	private JTable tableListForn;
-
-
-	private static final long serialVersionUID = 1L;
-
-	public void mostraEssaTela(){
-		setVisible(true);
-	}
-
-	public void fechaTelaForn(){
-		this.dispose();
-	}
-}

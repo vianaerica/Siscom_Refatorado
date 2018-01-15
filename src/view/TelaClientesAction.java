@@ -17,7 +17,9 @@ import javax.swing.JTabbedPane;
 import javax.swing.JPanel;
 import java.awt.SystemColor;
 import javax.swing.JTextField;
-import controller.Comercial;
+import controller.CadastroCliente;
+import controller.DeletaCliente;
+import controller.PesquisaCliente;
 import model.Cliente;
 import model.Pessoa;
 import model.Produto;
@@ -283,10 +285,10 @@ public class TelaClientesAction extends JFrame{
 		JButton btnAdd = new JButton("");
 		btnAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Comercial com = new Comercial();
+				CadastroCliente addCliente = new CadastroCliente();
 				Date data = new Date();
 				try {
-					com.inserirNovaPessoa(new Cliente(com.gerarCodPessoaSequencial(), txtNomeCad.getText(), txtTelCad.getText(), txtEmailCad.getText(), data, txtCpfCad.getText(), Double.parseDouble(txtLimiteCrdCad.getText())));
+					addCliente.cadastrarNovoCliente(new Cliente(1, txtNomeCad.getText(), txtTelCad.getText(), txtEmailCad.getText(), data, txtCpfCad.getText(), Double.parseDouble(txtLimiteCrdCad.getText())));
 				} catch (Exception e) {
 					e.getMessage();
 				}
@@ -301,8 +303,8 @@ public class TelaClientesAction extends JFrame{
 		JButton btnDelete = new JButton("");
 		btnDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Comercial com = new Comercial();
-			//	com.excluirPessoa(Cliente(txtCpfDel.getText()));
+				DeletaCliente delCliente = new DeletaCliente();
+				//delCliente.excluirClienteValidandoSeTemVenda(Cliente(txtCpfDel.getText()));
 			}
 		});
 		btnDelete.setBackground(Color.WHITE);
@@ -314,9 +316,9 @@ public class TelaClientesAction extends JFrame{
 		JButton btnPesquisa = new JButton("");
 		btnPesquisa.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Comercial com = new Comercial();
+				PesquisaCliente psqCliente = new PesquisaCliente();
 				try {
-					com.pesquisarClientesPorCpf(txtCpfSearch.getText());
+					psqCliente.pesquisarClientesPorCpf(txtCpfSearch.getText());
 				} catch (Exception e) {
 					e.getMessage();
 				}
@@ -331,12 +333,7 @@ public class TelaClientesAction extends JFrame{
 		JButton btnList = new JButton("");
 		btnList.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Comercial com = new Comercial();
-				try {
-					com.listarPessoasEmOrdemAlfabetica();
-				} catch (Exception e1) {
-					e1.getMessage();
-				}
+				//TODO
 			}
 		});
 		btnList.setToolTipText("Listar");
